@@ -7,16 +7,11 @@ import { addItem } from './CartSlice';
 function ProductList() {
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
-    const [addedToCart, setAddedToCart] = useState({});
     const dispatch = useDispatch();
     const cart = useSelector(state => state.cart.items);
 
     const handleAddToCart = (product) => {
         dispatch(addItem(product));
-        setAddedToCart((prevState) => ({
-           ...prevState,
-           [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
-         }));
     };
 
     const plantsArray = [
@@ -257,7 +252,6 @@ const handlePlantsClick = (e) => {
 };
 
    const handleContinueShopping = (e) => {
-    e.preventDefault();
     setShowCart(false);
   };
     return (
@@ -277,8 +271,8 @@ const handlePlantsClick = (e) => {
             </div>
             <div style={styleObjUl}>
                 <div> <a href="#" onClick={(e)=>handlePlantsClick(e)} style={styleA}>Plants</a></div>
-                <div className='cart-wrapper'>
-                <div> <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}><h1 className='cart'>
+                <div className='cart-wrapper' onClick={(e) => handleCartClick(e)}>
+                <div> <a href="#" style={styleA}><h1 className='cart'>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68">
                         <rect width="156" height="156" fill="none"></rect>
                         <circle cx="80" cy="216" r="12"></circle>
@@ -295,18 +289,21 @@ const handlePlantsClick = (e) => {
                 <div key={index}>
                     <h1><div>{category.category}</div></h1>
                     <div className="product-list">
-                        {category.plants.map((plant, plantIndex) => (
+                        {category.plants.map((plant, plantIndex) => {
+                            const cartItem = cart.find(item => item.name === plant.name);
+                        return (
                         <div className="product-card" key={plantIndex}>
                             <img className="product-image" src={plant.image} alt={plant.name} />
                             <div className="product-title">{plant.name}</div>
                             <div className='product-description'>{plant.description}</div>
                             <div className='product-cost'>{plant.cost}</div>
-                            <button  className="product-button" onClick={() => handleAddToCart(plant)}
-                            disabled={addedToCart[plant.name]}>
-                                {addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'}
+                            <button  className={`product-button ${cartItem !== undefined ? 'added-to-cart' : ''}`} onClick={() => handleAddToCart(plant)}
+                            disabled={cartItem !== undefined}>
+                                {cartItem !== undefined ? 'Added to Cart' : 'Add to Cart'}
                                 </button>
                         </div>
-                        ))}
+                        )
+                        })}
                     </div>
                 </div>
             ))}
