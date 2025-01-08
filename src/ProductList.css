@@ -164,12 +164,16 @@ body {
     color: white;
     display: flex;
 }
+.cart-wrapper{
+    position: relative;
+}
 .cart_quantity_count{
-    margin-top: 16px;
+    top: 50%;
     /* background-color: red; */
-    margin-left: 27px;
+    left: 50%;
+    transform: translate(-50%, -50%);
     position: absolute;
-    font-size: 29px;
+    z-index: 10;
 
 }
 .plantname_heading{
@@ -250,3 +254,5 @@ body {
         text-align: center; /* Align text to the center */
       }
   }
+
+  
