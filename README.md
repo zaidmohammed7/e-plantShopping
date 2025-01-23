@@ -96,5 +96,3 @@ Displays all items added to the cart with:
 - The course *"Developing Front-End Apps with React"*, offered by **IBM** through **Coursera**.
   You can find more details about the course [here](https://www.coursera.org/learn/developing-frontend-apps-with-react).
 - Special thanks to the **IBM Developer Skills Network** for providing the foundational project structure and guidance.
-
----
